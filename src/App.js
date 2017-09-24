@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import ListExampleSimple from './Todos'
+import Todos from './components/Todos'
 
 class App extends Component {
 
   render() {
     return (
-      <ListExampleSimple />
+      <Todos />
     );
   }
 }
