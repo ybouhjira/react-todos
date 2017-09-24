@@ -46,7 +46,7 @@ export default class ListExampleSimple extends Component {
       const todos = [...this.state.todos];
       const lastTodo = todos[todos.length - 1];
       const newTodo = {
-        id: lastTodo.id + 1, 
+        id: (lastTodo ? lastTodo.id : -1) + 1,
         text: this.text.value, 
         done: false
       };
