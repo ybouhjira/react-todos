@@ -22,7 +22,6 @@ export default class ListExampleSimple extends Component {
   }
 
   getItem(item) {
-    console.log(item.done)
     return (
       <ListItem button> 
         <Checkbox checked={item.done}/>
@@ -35,6 +34,22 @@ export default class ListExampleSimple extends Component {
   removeItem(id) {
     const todos = this.state.todos.filter(t => t.id !== id);
     this.setState({todos});
+  }
+
+  onAddKeyPress(event) {
+    if (event.key === 'Enter') {
+      const todos = [...this.state.todos];
+      const lastTodo = todos[todos.length - 1];
+      const newTodo = {
+        id: lastTodo.id + 1, 
+        text: this.text.value, 
+        done: false
+      };
+      todos.push(newTodo);
+      this.setState({todos});
+
+      this.text.value = '';
+    }
   }
 
   render() {
@@ -50,7 +65,7 @@ export default class ListExampleSimple extends Component {
         <List>
           <ListItem> 
             <Add />
-            <TextField id="text" margin="normal"/>
+            <TextField fullWidth inputRef={(input) => {this.text = input}} id="text" margin="normal" onKeyPress={this.onAddKeyPress.bind(this)}/>
           </ListItem>
           {this.state.todos.map(this.getItem.bind(this))}
         </List> 
