@@ -5,8 +5,10 @@ import Close from 'material-ui-icons/Close';
 import Add from 'material-ui-icons/Add';
 import IconButton from 'material-ui/IconButton';
 import TextField from 'material-ui/TextField';
+import Button from 'material-ui/Button';
+import Card, { CardContent } from 'material-ui/Card';
 
-export default class ListExampleSimple extends Component {
+export default class Todos extends Component {
   constructor() {
     super();
     this.state = {
@@ -16,6 +18,13 @@ export default class ListExampleSimple extends Component {
         {id: 2, done: true, text: 'Buy milk'}
       ]
     }
+
+    this.clearAll = this.clearAll.bind(this);
+  }
+
+  clearAll() {
+    const todos = this.state.todos.filter(t => !t.done);
+    this.setState({todos});
   }
 
   toggleDone(item) {
@@ -58,13 +67,23 @@ export default class ListExampleSimple extends Component {
 
   render() {
     return (
-      <List>
-        <ListItem> 
-          <Add />
-          <TextField fullWidth inputRef={(input) => {this.text = input}} id="text" margin="normal" onKeyPress={this.onAddKeyPress.bind(this)}/>
-        </ListItem>
-        {this.state.todos.map(this.getItem.bind(this))}
-      </List> 
+      <Card style={{margin: 20}}>
+        <CardContent>
+          <List>
+            <ListItem> 
+              <Add />
+              <TextField 
+                onKeyPress={this.onAddKeyPress.bind(this)}
+                inputRef={(input) => {this.text = input}} 
+                fullWidth 
+                id="text" 
+                margin="normal" />
+            </ListItem>
+            {this.state.todos.map(this.getItem.bind(this))}
+          </List>
+          <Button color="accent" onClick={this.clearAll}> <Close /> &nbsp;Clear</Button>
+        </CardContent>
+      </Card>
     )
   }
 }
