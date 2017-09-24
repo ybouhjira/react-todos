@@ -26,9 +26,9 @@ export default class ListExampleSimple extends Component {
 
   getItem(item) {
     return (
-      <ListItem button onClick={() => this.toggleDone(item)}>
+      <ListItem button onClick={() => this.toggleDone(item)} key={item.id}>
         <Checkbox checked={item.done}/>
-        <ListItemText primary={item.text} />
+        <ListItemText primary={item.text} style={{textDecoration: item.done ? 'line-through' : ''}}/>
         <IconButton onClick={e => this.removeItem(e, item.id)}><Close /></IconButton>
       </ListItem>
     )
@@ -55,7 +55,7 @@ export default class ListExampleSimple extends Component {
       this.text.value = '';
     }
   }
-  
+
   render() {
     return (
       <List>
