@@ -42,7 +42,7 @@ export default class ListExampleSimple extends Component {
   }
 
   onAddKeyPress(event) {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && this.text.value.length !== 0) {
       const todos = [...this.state.todos];
       const lastTodo = todos[todos.length - 1];
       const newTodo = {
