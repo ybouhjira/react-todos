@@ -22,17 +22,40 @@ export default class Todos extends Component {
     this.clearAll = this.clearAll.bind(this);
   }
 
+  /**
+   * Clear todos which are done
+   */
   clearAll() {
     const todos = this.state.todos.filter(t => !t.done);
     this.setState({todos});
   }
 
+  /**
+   * Store data in localStorage
+   */
+  componentWillUpdate(nextPops, nextState) {
+    localStorage.setItem('todos', JSON.stringify(nextState.todos));
+  }
+
+  componentWillMount() {
+    const todos = JSON.parse(localStorage.getItem('todos'));
+    this.setState({todos});
+  }
+
+  /**
+   * Toggle done checkbox on item click
+   * @param {*} item a todo
+   */
   toggleDone(item) {
     item.done = !item.done;
     const {state:{todos}} = this;
     this.setState({todos});
   }
 
+  /**
+   * Item to tags
+   * @param {*} item a todo
+   */
   getItem(item) {
     return (
       <ListItem button onClick={() => this.toggleDone(item)} key={item.id}>
@@ -43,6 +66,11 @@ export default class Todos extends Component {
     )
   }
 
+  /**
+   * Remove an item on click
+   * @param {*} e then click event
+   * @param {*} id the item's id
+   */
   removeItem(e, id) {
     e.preventDefault();
     e.stopPropagation();
@@ -50,6 +78,10 @@ export default class Todos extends Component {
     this.setState({todos});
   }
 
+  /**
+   * When users presses the ENTER key
+   * @param {*} event 
+   */
   onAddKeyPress(event) {
     if (event.key === 'Enter' && this.text.value.length !== 0) {
       const todos = [...this.state.todos];
